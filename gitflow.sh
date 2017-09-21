@@ -4,7 +4,7 @@ echo "##########################################################################
 echo "                          欢迎使用Gitflow自动脚本                              "
 echo "                  ** 本脚本规范了日常操作的分支更新合并的流程 **                "
 echo "                  **  只有流程内的操作才被允许,切勿私自改动! **                 "
-echo "                                                  v1.0  @thu                 "
+echo "                                                  			                 "
 echo " 固定分支:                                                                 "
 echo "    master: 主干分支,跟线上代码一致,三轮测试使用;                            "
 echo "    test: 测试代码分支,一轮二轮测试及修复Bug使用;                            "
@@ -51,7 +51,7 @@ gf_checkBranch(){
 }
 
 gf_checkConflict(){
-    DIRS=("source" "merge.sh" "pull.sh" "env.sh" "push.sh" "test.sh")
+    DIRS=("src" "merge.sh" "pull.sh" "env.sh" "push.sh" "test.sh")
     for dir in ${DIRS[*]}; do
         echo "正在检测 $dir 是否存在冲突..."
         conflictFiles=`grep -rn '<<<<<<< HEAD' $dir`
