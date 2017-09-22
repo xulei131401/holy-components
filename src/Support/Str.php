@@ -136,9 +136,9 @@ class Str
     }
 
     /**
-     * [将字符串的每个单词首字母大写]
-     * @param  [type] $value [description]
-     * @return [type]        [description]
+     * 将字符串的每个单词首字母大写
+     * @param $value
+     * @return mixed
      */
     public static function studly($value)
     {

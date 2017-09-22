@@ -213,3 +213,5 @@ class Encrypter implements EncrypterContract
         return $this->key;
     }
 }
+
+/* End of file Encrypter.php */
