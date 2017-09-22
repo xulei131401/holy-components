@@ -23,8 +23,5 @@
     		"Holy\\":"src/"
     	}
     },
-    "suggest": {},
-    "config": {},
-    "minimum-stability": "dev",
     "prefer-stable": true
 }
