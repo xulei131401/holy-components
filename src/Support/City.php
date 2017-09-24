@@ -1524,11 +1524,11 @@ class City
             "阿拉善盟" => "483"
         );
 
-   /**
-    * [根据城市获取对应的省信息]
-    * @param  [type] $city [description]
-    * @return [type]       [description]
-    */
+    /**
+     * 根据城市获取对应的省信息
+     * @param $city
+     * @return mixed|null
+     */
     public static function cityToProvice($city)
     {
        return isset(self::$cityProvince[$city]) ? self::$cityProvince[$city] : null;
@@ -1546,9 +1546,10 @@ class City
     }
 
     /**
-     * [根据城市名称获取区号]
-     * @param  [type] $city [description]
-     * @return [type]       [description]
+     * 根据城市名称获取区号
+     * @param $city
+     * @param string $append
+     * @return null|string
      */
     public static function getCityCode($city, $append = '0')
     {
