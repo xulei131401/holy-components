@@ -5,11 +5,12 @@ class Str
 {
     protected static $randomFactor = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     protected static $studlyCache = [];
-	/**
-	 * [获取指定长度的随机字符串:实现方式通过生成随机字节进行截取]
-	 * @param  integer $length [description]
-	 * @return [type]          [description]
-	 */
+
+    /**
+     * 获取指定长度的随机字符串:实现方式通过生成随机字节进行截取
+     * @param int $length
+     * @return string
+     */
     public static function random($length = 16)
     {
         $string = '';
@@ -21,9 +22,9 @@ class Str
     }
 
     /**
-     * [快速随机生成只有字母数字的字符串，针对7以下版本走常规方法生成，7以上版本使用random_bytes生成]
-     * @param  integer $length [description]
-     * @return [type]          [description]
+     * 快速随机生成只有字母数字的字符串，针对7以下版本走常规方法生成，7以上版本使用random_bytes生成
+     * @param int $length
+     * @return bool|string
      */
     public static function quickRandom($length = 16)
     {
@@ -34,11 +35,11 @@ class Str
     }
 
     /**
-     * [截取指定长度字符串,注意mb_strwidth的使用]
-     * @param  [type]  $value [description]
-     * @param  integer $limit [description]
-     * @param  string  $end   [description]
-     * @return [type]         [description]
+     * 截取指定长度字符串,注意mb_strwidth的使用
+     * @param $value
+     * @param int $limit
+     * @param string $end
+     * @return string
      */
     public static function limit($value, $limit = 100, $end = '')
     {
@@ -49,12 +50,12 @@ class Str
         return rtrim(mb_strimwidth($value, 0, $limit, '', 'UTF-8')).$end;
     }
 
-     /**
-      * [判断字符串是不是已指定字符串开头，指定的字符串可以是字符串类型也可以是数组类型]
-      * @param  [type] $haystack [description]
-      * @param  [type] $needles  [description]
-      * @return [type]           [description]
-      */
+    /**
+     * 判断字符串是不是已指定字符串开头，指定的字符串可以是字符串类型也可以是数组类型
+     * @param $haystack
+     * @param $needles
+     * @return bool
+     */
     public static function startsWith($haystack, $needles)
     {
         foreach ((array) $needles as $needle) {
@@ -67,10 +68,10 @@ class Str
     }
 
     /**
-     * [将指定字符添加到字符串末尾]
-     * @param  [type] $value [description]
-     * @param  [type] $cap   [description]
-     * @return [type]        [description]
+     * 将指定字符添加到字符串末尾
+     * @param $value
+     * @param $cap
+     * @return string
      */
     public static function finish($value, $cap)
     {
@@ -80,10 +81,10 @@ class Str
     }
 
     /**
-     * [判断字符串是不是以给定字符串结尾]
-     * @param  [type] $haystack [description]
-     * @param  [type] $needles  [description]
-     * @return [type]           [description]
+     * 判断字符串是不是以给定字符串结尾
+     * @param $haystack
+     * @param $needles
+     * @return bool
      */
     public static function endsWith($haystack, $needles)
     {
@@ -97,10 +98,10 @@ class Str
     }
 
     /**
-     * [判断字符串中是否包含给定的字符串]
-     * @param  [type] $haystack [description]
-     * @param  [type] $needles  [description]
-     * @return [type]           [description]
+     * 判断字符串中是否包含给定的字符串
+     * @param $haystack
+     * @param $needles
+     * @return bool
      */
     public static function contains($haystack, $needles)
     {
