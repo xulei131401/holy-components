@@ -19,10 +19,13 @@
         "php": ">=5.6.4",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "league/flysystem": "^1.0",
         "nesbot/carbon": "~1.20",
         "paragonie/random_compat": "~1.4|~2.0",
-        "symfony/finder": "^3.3"
+        "symfony/filesystem": "^3.3",
+        "symfony/finder": "^3.3",
+        "symfony/var-dumper": "^3.3",
+        "symfony/yaml": "^3.3",
+        "vlucas/phpdotenv": "~2.2"
     },
     "autoload":{
         "files": [

@@ -1,6 +1,10 @@
 <?php
 /*下面是全局普通方法*/
-use Holy\Foundation\Support\Str;
+
+use Holy\Components\Foundation\Str;
+use Holy\Components\Support\Debug\Dumper;
+use Holy\Contracts\Support\Htmlable;
+use Holy\Hashing\BcryptHasher;
 
 if (! function_exists('head')) {
     
@@ -110,5 +114,105 @@ if (! function_exists('env')) {
         return $value;
     }
 }
+/**
+ * 便捷的打印函数
+ */
+if (! function_exists('dd')) {
 
+    function dd()
+    {
+        array_map(function ($x) {
+            (new Dumper)->dump($x);
+        }, func_get_args());
+
+        die(1);
+    }
+}
+
+if (! function_exists('e')) {
+    /**
+     * htmlspecialchars() 函数把预定义的字符转换为 HTML 实体。
+        预定义的字符是：
+        & （和号）成为 &
+        " （双引号）成为 "
+        ' （单引号）成为 '
+        < （小于）成为 <
+        > （大于）成为 >
+     * @param $value
+     * @return string
+     */
+    function e($value)
+    {
+        if ($value instanceof Htmlable) {
+            return $value->toHtml();
+        }
+        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
+    }
+}
+
+if (! function_exists('object_get')) {
+
+    function object_get($object, $key, $default = null)
+    {
+        if (is_null($key) || trim($key) == '') {
+            return $object;
+        }
+
+        foreach (explode('.', $key) as $segment) {
+            if (! is_object($object) || ! isset($object->{$segment})) {
+                return value($default);
+            }
+
+            $object = $object->{$segment};
+        }
+
+        return $object;
+    }
+}
+
+if (! function_exists('trait_uses_recursive')) {
+
+    function trait_uses_recursive($trait)
+    {
+        $traits = class_uses($trait);
+
+        foreach ($traits as $trait) {
+            $traits += trait_uses_recursive($trait);
+        }
+
+        return $traits;
+    }
+}
+/**
+ * 为当前值执行一个回调
+ */
+if (! function_exists('tap')) {
+
+    function tap($value, $callback)
+    {
+        $callback($value);
+
+        return $value;
+    }
+}
+
+if (! function_exists('preg_replace_array')) {
+
+    function preg_replace_array($pattern, array $replacements, $subject)
+    {
+        return preg_replace_callback($pattern, function () use (&$replacements) {
+            foreach ($replacements as $key => $value) {
+                return array_shift($replacements);
+            }
+        }, $subject);
+    }
+}
+
+if (! function_exists('bcrypt')) {
+
+    function bcrypt($value, $options = [])
+    {
+        return with(new BcryptHasher())->make($value, $options);
+    }
+}
 /* End of file helpers.php */

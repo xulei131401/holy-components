@@ -7,25 +7,17 @@ use Holy\Contracts\Hashing\Hasher as HasherContract;
 
 class BcryptHasher implements HasherContract
 {
-    /**
-     * Default crypt cost factor.
-     *
-     * @var int
-     */
-    protected $rounds = 10;
+    protected $cost = 10;
 
     /**
-     * Hash the given value.
-     *
-     * @param  string  $value
-     * @param  array   $options
-     * @return string
-     *
-     * @throws \RuntimeException
+     * 进行密码hash
+     * @param string $value
+     * @param array $options
+     * @return bool|string
      */
     public function make($value, array $options = [])
     {
-        $cost = isset($options['rounds']) ? $options['rounds'] : $this->rounds;
+        $cost = isset($options['cost']) ? $options['cost'] : $this->cost;
 
         $hash = password_hash($value, PASSWORD_BCRYPT, ['cost' => $cost]);
 
@@ -37,7 +29,7 @@ class BcryptHasher implements HasherContract
     }
 
     /**
-     * Check the given plain value against a hash.
+     * 验证hash
      *
      * @param  string  $value
      * @param  string  $hashedValue
@@ -54,29 +46,26 @@ class BcryptHasher implements HasherContract
     }
 
     /**
-     * Check if the given hash has been hashed using the given options.
-     *
-     * @param  string  $hashedValue
-     * @param  array   $options
+     * 重新hash
+     * @param string $hashedValue
+     * @param array $options
      * @return bool
      */
     public function needsRehash($hashedValue, array $options = [])
     {
         return password_needs_rehash($hashedValue, PASSWORD_BCRYPT, [
-            'cost' => isset($options['rounds']) ? $options['rounds'] : $this->rounds,
+            'cost' => isset($options['cost']) ? $options['cost'] : $this->cost,
         ]);
     }
 
     /**
-     * Set the default password work factor.
-     *
-     * @param  int  $rounds
+     * 设置默认的算法cost，一般是8-10
+     * @param $cost
      * @return $this
      */
-    public function setRounds($rounds)
+    public function setCost($cost)
     {
-        $this->rounds = (int) $rounds;
-
+        $this->cost = (int) $cost;
         return $this;
     }
 }
