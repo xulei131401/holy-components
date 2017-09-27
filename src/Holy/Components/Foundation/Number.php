@@ -36,27 +36,6 @@ class Number
         return mt_rand($min, $max);
     }
 
-    /**
-     * （待定）
-     * @param int $length
-     * @return bool|number|string
-     */
-    public static function uniqid($length = 8)
-    {
-        $id = abs(crc32(uniqid()));
-        $id = (string)$id;
-        $len = strlen($id);
-        if ($len > $length) {
-            $id = substr($id, $len - $length);
-        } else {
-            while ($len < $length) {
-                $id .= mt_rand(0, 9);
-                $len++;
-            }
-        }
-
-        return $id;
-    }
 }
 
 /* End of file Number.php */
