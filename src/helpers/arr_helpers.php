@@ -1,6 +1,6 @@
 <?php
 use Holy\Components\Primary\Arr;
-use Holy\Components\Primary\Collection;
+use Holy\Components\Collection\Collection;
 
 /*下面是全局的Arr的静态方法*/
 if (! function_exists('array_add')) {
