@@ -1,10 +1,10 @@
 <?php
 /*下面是全局普通方法*/
 
-use Holy\Components\Foundation\Str;
+use Holy\Components\Primary\Str;
 use Holy\Components\Support\Debug\Dumper;
 use Holy\Contracts\Support\Htmlable;
-use Holy\Hashing\BcryptHasher;
+use Holy\Components\Hashing\BcryptHasher;
 
 if (! function_exists('head')) {
     

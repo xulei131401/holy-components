@@ -1,5 +1,5 @@
 <?php
-namespace Holy\Encryption\Components;
+namespace Holy\Components\Encryption;
 
 use RuntimeException;
 use Holy\Contracts\Encryption\DecryptException;

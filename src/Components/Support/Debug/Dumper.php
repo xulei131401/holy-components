@@ -8,10 +8,8 @@ use Symfony\Component\VarDumper\Dumper\CliDumper;
 class Dumper
 {
     /**
-     * Dump a value with elegance.
-     *
-     * @param  mixed  $value
-     * @return void
+     * 自定义打印方法
+     * @param $value
      */
     public function dump($value)
     {

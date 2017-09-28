@@ -1,6 +1,6 @@
 <?php
 
-namespace Holy\Components\Foundation;
+namespace Holy\Components\Primary;
 
 class HigherOrderCollectionProxy
 {

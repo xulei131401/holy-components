@@ -1,6 +1,6 @@
 <?php
 
-namespace Holy\Hashing;
+namespace Holy\Components\Hashing;
 
 use RuntimeException;
 use Holy\Contracts\Hashing\Hasher as HasherContract;

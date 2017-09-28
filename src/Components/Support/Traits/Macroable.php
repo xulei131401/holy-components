@@ -5,31 +5,29 @@ namespace Holy\Components\Support\Traits;
 use Closure;
 use BadMethodCallException;
 
+/**
+ * 动态的将callable类型的参数供对象调用
+ * Trait Macroable
+ * @package Holy\Components\Support\Traits
+ */
 trait Macroable
 {
-    /**
-     * The registered string macros.
-     *
-     * @var array
-     */
+
     protected static $macros = [];
 
     /**
-     * Register a custom macro.
-     *
-     * @param  string    $name
-     * @param  callable  $macro
-     * @return void
+     * 为对象添加方法
+     * @param $name
+     * @param callable $macro
      */
-    public static function macro($name, callable $macro)
+    public static function addMethod($name, callable $macro)
     {
         static::$macros[$name] = $macro;
     }
 
     /**
-     * Checks if macro is registered.
-     *
-     * @param  string  $name
+     * 判断是否添加过该方法
+     * @param $name
      * @return bool
      */
     public static function hasMacro($name)
@@ -38,13 +36,10 @@ trait Macroable
     }
 
     /**
-     * Dynamically handle calls to the class.
-     *
-     * @param  string  $method
-     * @param  array   $parameters
+     * 静态调用方法
+     * @param $method
+     * @param $parameters
      * @return mixed
-     *
-     * @throws \BadMethodCallException
      */
     public static function __callStatic($method, $parameters)
     {
@@ -60,13 +55,10 @@ trait Macroable
     }
 
     /**
-     * Dynamically handle calls to the class.
-     *
-     * @param  string  $method
-     * @param  array   $parameters
+     * 普通方法调用
+     * @param $method
+     * @param $parameters
      * @return mixed
-     *
-     * @throws \BadMethodCallException
      */
     public function __call($method, $parameters)
     {

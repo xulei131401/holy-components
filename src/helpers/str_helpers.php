@@ -1,5 +1,5 @@
 <?php
-use Holy\Components\Foundation\Str;
+use Holy\Components\Primary\Str;
 
 /*以下是字符串全局函数*/
 if (! function_exists('str_random')) {

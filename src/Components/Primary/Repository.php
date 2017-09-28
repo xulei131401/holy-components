@@ -1,6 +1,6 @@
 <?php
 
-namespace Holy\Config;
+namespace Holy\Components\Primary;
 
 use ArrayAccess;
 use Holy\Components\Foundation\Arr;

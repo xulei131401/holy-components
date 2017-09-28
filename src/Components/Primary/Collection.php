@@ -2,7 +2,7 @@
 /**
  * 集合类
  */
-namespace Holy\Components\Foundation;
+namespace Holy\Components\Primary;
 
 use Countable;
 use Exception;

@@ -1,6 +1,6 @@
 <?php
-use Holy\Components\Foundation\Arr;
-use Holy\Components\Foundation\Collection;
+use Holy\Components\Primary\Arr;
+use Holy\Components\Primary\Collection;
 
 /*下面是全局的Arr的静态方法*/
 if (! function_exists('array_add')) {
@@ -47,7 +47,7 @@ if (! function_exists('array_forget')) {
 
     function array_forget(&$array, $keys)
     {
-        return Arr::forget($array, $keys);
+        Arr::forget($array, $keys);
     }
 }
 
