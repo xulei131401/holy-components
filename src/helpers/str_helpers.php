@@ -4,7 +4,7 @@ use Holy\Components\Primary\Str;
 /*以下是字符串全局函数*/
 if (! function_exists('str_random')) {
     
-    function str_random($length)
+    function str_random($length = 16)
     {
         return Str::random($length);
     }
@@ -12,9 +12,17 @@ if (! function_exists('str_random')) {
 
 if (! function_exists('quick_random')) {
     
-    function quick_random($length)
+    function quick_random($length = 16, $type = null)
     {
-        return Str::quickRandom($length);
+        return Str::quickRandom($length, $type);
+    }
+}
+
+if (! function_exists('is_utf8')) {
+
+    function is_utf8($string = '')
+    {
+        return Str::isUTF8($string);
     }
 }
 

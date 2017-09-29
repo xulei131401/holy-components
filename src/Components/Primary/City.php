@@ -1531,7 +1531,7 @@ class City
      */
     public static function cityToProvice($city)
     {
-       return isset(self::$cityProvince[$city]) ? self::$cityProvince[$city] : null;
+       return isset(static::$cityProvince[$city]) ? static::$cityProvince[$city] : null;
     }
 
     /**
@@ -1553,9 +1553,7 @@ class City
      */
     public static function getCityCode($city, $append = '0')
     {
-        return isset(self::$cityCode[$city]) ? $append . self::$cityCode[$city] : null;
+        return isset(static::$cityCode[$city]) ? $append . static::$cityCode[$city] : null;
     }
 
-    
-    
 }

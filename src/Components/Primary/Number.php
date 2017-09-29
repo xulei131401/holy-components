@@ -3,6 +3,9 @@ namespace Holy\Components\Primary;
 
 class Number
 {
+    protected static $randomFactor = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    protected static $randomNumber = '0123456789';
+
     /**
      * 金额分转元
      * @param $money
@@ -21,19 +24,6 @@ class Number
     public static function yuan2fen($money)
     {
         return intval($money * 100);
-    }
-
-    /**
-     * 随机生成字符串（最长32位）
-     * @param int $length ：字符串位数
-     * @return int
-     */
-    public static function random($length)
-    {
-        $length = intval($length);
-        $min = pow(10, ($length - 1));
-        $max = $min * 10 - 1;
-        return mt_rand($min, $max);
     }
 
 }

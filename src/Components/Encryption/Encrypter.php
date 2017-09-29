@@ -11,7 +11,6 @@ class Encrypter implements EncrypterContract
     protected $key;
     protected $cipher;
 
-
     public function __construct($key, $cipher = 'AES-128-CBC')
     {
         $key = (string) $key;
@@ -40,18 +39,15 @@ class Encrypter implements EncrypterContract
     }
 
     /**
-     * [加密]
-     * @param  [type]  $value     [description]
-     * @param  boolean $serialize [description]
-     * @return [type]             [description]
+     * 加密
+     * @param string $value
+     * @param bool $serialize
+     * @return string
      */
     public function encrypt($value, $serialize = true)
     {
         $iv = random_bytes(16);
 
-        // First we will encrypt the value using OpenSSL. After this is encrypted we
-        // will proceed to calculating a MAC for the encrypted value so that this
-        // value can be verified later as not having been changed by the users.
         $value = \openssl_encrypt(
             $serialize ? serialize($value) : $value,
             $this->cipher, $this->key, 0, $iv
@@ -61,9 +57,6 @@ class Encrypter implements EncrypterContract
             throw new EncryptException('Could not encrypt the data.');
         }
 
-        // Once we have the encrypted value we will go ahead base64_encode the input
-        // vector and create the MAC for the encrypted value so we can verify its
-        // authenticity. Then, we'll JSON encode the data in a "payload" array.
         $mac = $this->hash($iv = base64_encode($iv), $value);
 
         $json = json_encode(compact('iv', 'value', 'mac'));
@@ -87,10 +80,10 @@ class Encrypter implements EncrypterContract
     }
 
     /**
-     * [解密]
-     * @param  [type]  $payload     [description]
-     * @param  boolean $unserialize [description]
-     * @return [type]               [description]
+     * 解密
+     * @param string $payload
+     * @param bool $unserialize
+     * @return mixed|string
      */
     public function decrypt($payload, $unserialize = true)
     {
@@ -98,9 +91,6 @@ class Encrypter implements EncrypterContract
 
         $iv = base64_decode($payload['iv']);
 
-        // Here we will decrypt the value. If we are able to successfully decrypt it
-        // we will then unserialize it and return it out to the caller. If we are
-        // unable to decrypt this value we will throw out an exception message.
         $decrypted = \openssl_decrypt(
             $payload['value'], $this->cipher, $this->key, 0, $iv
         );
@@ -136,20 +126,13 @@ class Encrypter implements EncrypterContract
     }
 
     /**
-     * Get the JSON array from the given payload.
-     *
-     * @param  string  $payload
-     * @return array
-     *
-     * @throws \Illuminate\Contracts\Encryption\DecryptException
+     * @param $payload
+     * @return mixed
      */
     protected function getJsonPayload($payload)
     {
         $payload = json_decode(base64_decode($payload), true);
 
-        // If the payload is not valid JSON or does not have the proper keys set we will
-        // assume it is invalid and bail out of the routine since we will not be able
-        // to decrypt the given value. We'll also check the MAC for this encryption.
         if (! $this->validPayload($payload)) {
             throw new DecryptException('The payload is invalid.');
         }

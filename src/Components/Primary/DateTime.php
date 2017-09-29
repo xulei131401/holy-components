@@ -1,9 +1,7 @@
 <?php
 namespace Holy\Components\Primary;
 
-use Carbon\Carbon;
-
-class DateTime extends Carbon
+class DateTime
 {
 
     /**
@@ -104,6 +102,95 @@ class DateTime extends Carbon
         $date = date('Y-m-d', strtotime($date));
         $lastDay = date("Y-m-d", strtotime("$date Sunday"));
         return $lastDay;
+    }
+
+    /**
+     * 计算每个月有几天
+     * @param $month
+     * @param $year
+     * @return int|string
+     */
+    public static function getDaysInMonth($month, $year) {
+        $days = '';
+        if ($month == 1 || $month == 3 || $month == 5 || $month == 7 || $month == 8 || $month == 10 || $month == 12)
+            $days = 31;
+        else if ($month == 4 || $month == 6 || $month == 9 || $month == 11)
+            $days = 30;
+        else if ($month == 2) {
+            if (static::isLeapYear($year)) {
+                $days = 29;
+            } else {
+                $days = 28;
+            }
+        }
+        return $days;
+    }
+
+    /**
+     * 判断是否为润年
+     * @param $year
+     * @return bool
+     */
+    public static function isLeapYear($year) {
+        if (strtotime($year) !== false) {
+            if ((($year % 4) == 0) && (($year % 100) != 0) || (($year % 400) == 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 日期转换显示（超过当前时间则显示刚刚）
+     * @param $date
+     * @return string
+     */
+    public static function formatTime($date) {
+        $timer = strtotime($date);
+        $diff = $_SERVER['REQUEST_TIME'] - $timer;//得到请求间隔的时长
+        $day = floor($diff / 86400);
+        $free = $diff % 86400;
+        if($day > 0) {
+            if(15 < $day && $day <30){
+                return "半个月前";
+            }elseif(30 <= $day && $day <90){
+                return "1个月前";
+            }elseif(90 <= $day && $day <187){
+                return "3个月前";
+            }elseif(187 <= $day && $day <365){
+                return "半年前";
+            }elseif(365 <= $day){
+                return "1年前";
+            }else{
+                return $day."天前";
+            }
+        }else{
+            if($free>0){
+                $hour = floor($free / 3600);
+                $free = $free % 3600;
+                if($hour>0){
+                    return $hour."小时前";
+                }else{
+                    if($free>0){
+                        $min = floor($free / 60);
+                        $free = $free % 60;
+                        if($min>0){
+                            return $min."分钟前";
+                        }else{
+                            if($free>0){
+                                return $free."秒前";
+                            }else{
+                                return '刚刚';
+                            }
+                        }
+                    }else{
+                        return '刚刚';
+                    }
+                }
+            }else{
+                return '刚刚';
+            }
+        }
     }
 
 

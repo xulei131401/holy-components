@@ -4,9 +4,15 @@ namespace Holy\Components\Primary;
 class Str
 {
     protected static $randomFactor = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    protected static $randomNumber = '0123456789';
+    protected static $randomLower = 'abcdefghijklmnopqrstuvwxyz';
+    protected static $randomUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     protected static $studlyCache = [];
     protected static $camelCache = [];
     protected static $snakeCache = [];
+    const STR_UPPER = 'U';      //upper
+    const STR_LOWER = 'L';      //lower
+    const STR_NUMBER = 'N';     //number
 
     /**
      * 将特殊字符转换为常规字符.
@@ -24,31 +30,93 @@ class Str
     }
 
     /**
-     * 获取指定长度的随机字符串:实现方式通过生成随机字节进行截取
+     *  生成16进制随机字符串，可以用来加密，比如当做salt
      * @param int $length
      * @return string
      */
     public static function random($length = 16)
     {
-        $string = '';
-        if ((int) $length > 0) {
-            $bytes = random_bytes($length);	//此函数用于产生安全的伪随机字节（php7函数的pollyfill）
-            $string .= substr(str_replace(['/', '+', '='], '', base64_encode($bytes)), 0, $length);
+        $bytes = null;
+        if (function_exists("random_bytes")) {
+            $bytes = random_bytes(ceil($length / 2));
+        } elseif (function_exists("openssl_random_pseudo_bytes")){
+            $bytes = openssl_random_pseudo_bytes(ceil($length / 2));
+        }else{
+            return substr(str_shuffle(str_repeat(static::$randomFactor, $length)), 0, $length);
         }
-        return $string;
+        return substr(bin2hex($bytes), 0, $length);
     }
 
     /**
-     * 快速随机生成只有字母数字的字符串，针对7以下版本走常规方法生成，7以上版本使用random_bytes生成
+     * 生成随机字符串(想唯一可以通过添加id前缀保证)
+     * @param null $type
      * @param int $length
-     * @return bool|string
+     * @return string
      */
-    public static function quickRandom($length = 16)
+    public static function quickRandom($length = 16, $type = null)
     {
-        if (PHP_MAJOR_VERSION > 5) {
-            return static::random($length);
+        $unique = '';
+        if ($type == static::STR_UPPER) {
+            for ($i = 0; $i < $length; $i++) {
+                $unique .= static::$randomFactor[mt_rand(36, 61)];
+            }
+            return $unique;
+        }elseif ($type == static::STR_LOWER) {
+            for ($i = 0; $i < $length; $i++) {
+                $unique .= static::$randomFactor[mt_rand(10, 35)];
+            }
+            return $unique;
+        }elseif ($type == static::STR_NUMBER) {
+            for ($i = 0; $i < $length; $i++) {
+                $unique .= static::$randomFactor[mt_rand(0, 9)];
+            }
+            return $unique;
+        }else{
+            for ($i = 0; $i < $length; $i++) {
+                $unique .= static::$randomFactor[mt_rand(0, 61)];
+            }
+            return $unique;
         }
-        return substr(str_shuffle(str_repeat(static::$randomFactor, $length)), 0, $length);
+    }
+
+    /**
+     * 用于生成订单号
+     * @param string $str
+     * @param int $min
+     * @param int $max
+     * @return string
+     */
+    public static function strOrder($str = '', $min = 10000000, $max = 99999999) {
+        return $str . time() . mt_rand($min, $max);
+    }
+
+    /**
+     * 判断是不是utf8编码
+     * @param $string
+     * @return bool
+     */
+    public static function isUTF8($string = null) {
+
+        return $string ? !! preg_match('%^(?:
+          [\x09\x0A\x0D\x20-\x7E]            # ASCII
+        | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
+        |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
+        | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+        |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
+        |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
+        | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+        |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
+        )*$%xs', $string) : false;
+    }
+
+    /**
+     * 非法字符过滤函数
+     * @param $str
+     * @return mixed
+     */
+    public static function filterUnsafe($str) {
+        $regex = "/,|\/|\~|\!|\@|\#|\\$|\%|\^|\&|\*|\(|\)|\_|\+|\{|\}|\:|\<|\>|\?|\[|\]|\.|\/|\;|\'|\`|\=|\\\|\|/";
+        return preg_replace($regex,"",$str);
     }
 
     /**
