@@ -183,11 +183,14 @@ if (! function_exists('trait_uses_recursive')) {
         return $traits;
     }
 }
-/**
- * 为当前值执行一个回调
- */
-if (! function_exists('tap')) {
 
+if (! function_exists('tap')) {
+    /**
+     * 为当前值执行一个回调
+     * @param $value
+     * @param $callback
+     * @return mixed
+     */
     function tap($value, $callback)
     {
         $callback($value);
@@ -215,4 +218,5 @@ if (! function_exists('bcrypt')) {
         return with(new BcryptHasher())->make($value, $options);
     }
 }
+
 /* End of file helpers.php */

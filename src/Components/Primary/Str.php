@@ -153,6 +153,40 @@ class Str
     }
 
     /**
+     * 中英文长度截取
+     * @param $str @截取字符串
+     * @param int $len @需要截取的长度
+     * @return string
+     */
+    public static function cutChinese($str, $len=10)
+    {
+        $str = trim($str);
+        $result = '';
+        $length = 0;
+        $inc = 1;
+        for ($j = 0; $j < strlen($str); $j += $inc) {
+            if ($length < $len) {
+                if (ord($str[$j]) == 194){
+                    $inc = 2;
+                    $length += 1;
+                } else if (ord($str[$j]) > 128) {
+                    $inc = 3;
+                    $length += 2;
+                } else {
+                    $inc = 1;
+                    $length += 1;
+                }
+                $result .= substr($str, $j, $inc);
+            } else {
+                $result = substr($result, 0, strlen($result) - $inc) . "...";
+                break;
+
+            }
+        }
+        return $result;
+    }
+
+    /**
      * 将指定字符添加到字符串末尾
      * @param $value
      * @param $cap
