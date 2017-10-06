@@ -48,6 +48,15 @@ class Str
     }
 
     /**
+     * 生成32位唯一字符串，用于标识上传图片（纯数字的）
+     * @return string
+     */
+    public static function uniqidStr()
+    {
+        return md5(uniqid().  mt_rand(0, 1000000));
+    }
+
+    /**
      * 生成随机字符串(想唯一可以通过添加id前缀保证)
      * @param null $type
      * @param int $length

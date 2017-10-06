@@ -14,10 +14,8 @@ use JsonSerializable;
 use IteratorAggregate;
 use InvalidArgumentException;
 use Holy\Components\Support\Traits\Macroable;
-use Holy\Contracts\Support\Arrayable;
-use Holy\Contracts\Support\Jsonable;
 
-class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate, Jsonable, JsonSerializable
+class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
 {
     use Macroable;
 
