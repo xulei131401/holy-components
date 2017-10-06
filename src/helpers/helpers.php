@@ -3,6 +3,7 @@
 
 use Holy\Components\Primary\Str;
 use Holy\Components\Support\Debug\Dumper;
+use Holy\Container\Container;
 use Holy\Contracts\Support\Htmlable;
 use Holy\Components\Hashing\BcryptHasher;
 
@@ -83,7 +84,12 @@ if (! function_exists('with')) {
 }
 
 if (! function_exists('env')) {
-
+    /**
+     * 支持env文件各种值，true,false,null,empty以及字符串
+     * @param $key
+     * @param null $default
+     * @return array|bool|false|mixed|null|string
+     */
     function env($key, $default = null)
     {
         $value = getenv($key);
@@ -106,14 +112,14 @@ if (! function_exists('env')) {
             case '(null)':
                 return null;
         }
-
+        // 用于处理特殊字符
         if (strlen($value) > 1 && Str::startsWith($value, '"') && Str::endsWith($value, '"')) {
             return substr($value, 1, -1);
         }
-
         return $value;
     }
 }
+
 /**
  * 便捷的打印函数
  */
@@ -121,10 +127,7 @@ if (! function_exists('dd')) {
 
     function dd()
     {
-        array_map(function ($x) {
-            (new Dumper)->dump($x);
-        }, func_get_args());
-
+        array_map(function ($x) {(new Dumper)->dump($x);}, func_get_args());
         die(1);
     }
 }
@@ -216,6 +219,21 @@ if (! function_exists('bcrypt')) {
     function bcrypt($value, $options = [])
     {
         return with(new BcryptHasher())->make($value, $options);
+    }
+}
+
+if (! function_exists('__include_file')) {
+
+    function __include_file($file)
+    {
+        return include $file;
+    }
+}
+if (! function_exists('__include_file')) {
+
+    function __require_file($file)
+    {
+        return require $file;
     }
 }
 

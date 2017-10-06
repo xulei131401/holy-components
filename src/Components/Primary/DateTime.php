@@ -193,6 +193,66 @@ class DateTime
         }
     }
 
+    /**
+     * 原生PHP生成日期时间的连续数组（
+     * $userStepReports = [
+        [
+        'date' => '2017-02-06',
+        'total' => 652,
+        ],
+        [
+        'date' => '2017-03-01',
+        'total' => 773,
+        ],
+        [
+        'date' => '2017-03-02',
+        'total' => 459,
+        ],];
+        $userStepReports,
+        '2017-02-25',
+        '2017-03-05',
+        'date',
+        ['total' => 0]
+     * ）
+     * @param $input
+     * @param $startDate
+     * @param $endDate
+     * @param $dateProperty
+     * @param $default
+     * @return array
+     */
+    public static function getDataInTimeSpan($input, $startDate, $endDate, $dateProperty, $default)
+    {
+        $start = new \DateTime($startDate);
+        $end   = new \DateTime($endDate);
+
+        if ($start->diff($end)->invert === 1) {
+            throw new \LogicException('开始时间不能大于结束时间');
+        }
+
+        $keyedInput = [];
+
+        foreach ($input as $value) {
+            $keyedInput[$value[$dateProperty]] = $value;
+        }
+
+        $tmpEnd = clone $end;
+        $endAt   = $tmpEnd->modify('+1 day')->format('Y-m-d');
+        $current = clone $start;
+        $output  = [];
+
+        while (($currentDate = $current->format('Y-m-d')) !== $endAt) {
+//            $output[] = $keyedInput[$currentDate] ?? array_merge($default, [
+//                    $dateProperty => $currentDate,
+//                ]);
+
+             $output[] = isset($keyedInput[$currentDate]) ? $keyedInput[$currentDate] : array_merge([$dateProperty => $currentDate], $default);
+            //改变时间戳,每次+1天
+            $current->modify('+1 day');
+        }
+
+        return $output;
+    }
 
 }
 

@@ -2,11 +2,8 @@
 namespace Holy\Components\Encryption;
 
 use RuntimeException;
-use Holy\Contracts\Encryption\DecryptException;
-use Holy\Contracts\Encryption\EncryptException;
-use Holy\Contracts\Encryption\Encrypter as EncrypterContract;
 
-class Encrypter implements EncrypterContract
+class Encrypter
 {
     protected $key;
     protected $cipher;

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+    <head>
+        <title>数据库文档</title>
+        <meta charset="UTF-8">
+        <style type="text/css">
+            *{padding: 0; margin: 0;}
+            html {overflow-x:hidden; overflow-y:hidden;}
+            body{
+                font-family: "Source Sans Pro", monospace, sans-serif;
+                font-weight: 400;
+                font-size: 16px;
+                min-width: 980px;
+                background-color: #ffffff;
+            }
+            .left{
+                width: 220px;
+                margin: 0;
+                padding: 10px 20px 20px 20px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                overflow-x: hidden;
+                overflow-y: auto;
+                background-color:#f5f5f5;
+                z-index: 10;
+            }
+            .left .left-container{ width:215px;}
+            .right{
+                position: fixed;
+                padding-top:16px;
+                z-index: -1;
+                left: 280px;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                overflow: auto;
+            }
+            .right-container{ width: 970px;}
+            a {
+                color: #08c;
+                text-decoration: none;
+            }
+
+            ul,li{ list-style: none; padding: 0; margin: 0;}
+
+            .nav > li.common > a{ display: block; padding: 3px 15px; font-size: 14px; border-left: 4px solid #e5e5e5;}
+            .nav > li.common > a:hover{ background-color: #ffffff; color: #005580;}
+            .nav-header{
+                display: block;
+                margin:10px 0 3px 0;
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 20px;
+                color: #999;
+                text-transform: uppercase;
+                border: 1px solid #e5e5e5;
+                background-color: #ffffff;
+            }
+            .nav > li.nav-header > a{padding: 5px 5px 5px 18px; display: block;}
+            .nav > li.nav-header > a:hover{ background-color: #0088cc; color: #ffffff!important;}
+            .f-left{ float: left;}
+            .project{border-bottom: 1px solid #e5e5e5; overflow: hidden; padding-bottom: 20px;}
+            .describe{ padding:10px 0; border-bottom: 1px solid #e5e5e5;}
+            table {
+                border-spacing: 0;
+                border-collapse: collapse;
+            }
+            td, th {padding: 0;}
+            table tr td,table tr th{  border: 1px solid #e5e5e5;}
+            th{ background-color: #f5f5f5;
+                text-align: left;
+                font-weight: 700;
+                padding: 4px 8px;}
+            td { padding: 4px 8px; font-size: 14px; }
+            h1{
+                font-weight: normal;
+                font-size: 44px;
+                line-height: 50px;
+                margin: 0 0 10px 0;
+            }
+            h2{
+                font-weight: normal;
+                font-size: 24px;
+                line-height: 30px;
+            }
+            h3{
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 24px;
+                margin:10px 0;
+            }
+            .nav-tabs {
+                height: 36px;
+                position: relative;
+                border-bottom: 1px solid #ddd;
+                margin-top: 20px;
+            }
+            .nav-tabs .title {
+                border: 1px solid #ddd;
+                border-bottom: none;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+                background-color: #ffffff;
+                padding: 8px 15px;
+                display: inline-block;
+                white-space: nowrap;
+            }
+            .content{
+                background-color: #292b36;
+                color: #ffffff;
+                padding: 10px;
+                border-radius: 6px;
+                margin: 10px  0;
+            }
+            button,input{ outline: none;}
+        </style>
+    </head>
+    <body>
+        <div id="myApp">
+            <!--左侧导航栏-->
+            <div class="left">
+                <div class="left-container">
+                    <ul class="nav">
+                        <li class="nav-header"><a href="#table">Tables</a></li>
+                        <li class="common" v-for ="table in data">
+                            <a :href="'#' + table.Name ">{{ table.Name }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--右侧是数据表内容区域-->
+            <div class="right">
+                <div class="right-container">
+                    <div id="table" class="project">
+                        <div class="f-left">
+                            <h1>方便的数据库文档</h1>
+                        </div>
+                    </div>
+                    <div v-for="table in data">
+                        <div :id="table.Name" class="describe">
+                            <h2>{{ table.Name }}：{{ table.Comment }}</h2>
+                        </div>
+                        <h3>数据表结构</h3>
+                        <table width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px">Field</th>
+                                    <th style="width: 40px">Type</th>
+                                    <th style="width: 20px">Null</th>
+                                    <th style="width: 20px">Key</th>
+                                    <th style="width: 40px">Default</th>
+                                    <th style="width: 20px">Extra</th>
+                                    <th>Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="column in table.Columns">
+                                    <td>{{ column.Field }}</td>
+                                    <td>{{ column.Type }}</td>
+                                    <td>{{ column.Null }}</td>
+                                    <td>{{ column.Key }}</td>
+                                    <td>{{ column.Default }}</td>
+                                    <td>{{ column.Extra }}</td>
+                                    <td>{{ column.Comment }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="nav-tabs">
+                            <div class="title">数据表创建SQL</div>
+                        </div>
+                        <div class="content">
+                            <pre><code>{{ table.Create_sql }}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--一下是js脚本-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js"></script>
+        <script type="text/javascript">
+            var app = new Vue({
+                el: '#myApp',
+                data: {
+                    data: {}
+                },
+                methods:{
+                    getData: function(){
+                        var that = this;
+                        axios.get('./dict.json')
+                            .then(function (response) {
+                                that.data = response.data;
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
+                },
+                created: function(){
+                    this.getData();
+                }
+            });
+
+        </script>
+    </body>
+</html>
