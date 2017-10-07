@@ -7,6 +7,9 @@ namespace Holy\Components\Collection;
 use Countable;
 use Exception;
 use ArrayAccess;
+use Holy\Components\Contracts\Support\Arrayable;
+use Holy\Components\Contracts\Support\Jsonable;
+use Holy\Components\Primary\Arr;
 use Traversable;
 use ArrayIterator;
 use CachingIterator;
@@ -15,7 +18,7 @@ use IteratorAggregate;
 use InvalidArgumentException;
 use Holy\Components\Support\Traits\Macroable;
 
-class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
+class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Arrayable, Jsonable
 {
     use Macroable;
 

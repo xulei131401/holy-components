@@ -1,9 +1,11 @@
 <?php
 namespace Holy\Components\Encryption;
 
+use Exception;
 use RuntimeException;
+use Holy\Components\Contracts\Encryption\Encrypter as EncrypterContract;
 
-class Encrypter
+class Encrypter implements EncrypterContract
 {
     protected $key;
     protected $cipher;
@@ -37,9 +39,10 @@ class Encrypter
 
     /**
      * 加密
-     * @param string $value
+     * @param $value
      * @param bool $serialize
      * @return string
+     * @throws Exception
      */
     public function encrypt($value, $serialize = true)
     {
@@ -51,7 +54,7 @@ class Encrypter
         );
 
         if ($value === false) {
-            throw new EncryptException('Could not encrypt the data.');
+            throw new Exception('Could not encrypt the data.');
         }
 
         $mac = $this->hash($iv = base64_encode($iv), $value);
@@ -59,7 +62,7 @@ class Encrypter
         $json = json_encode(compact('iv', 'value', 'mac'));
 
         if (! is_string($json)) {
-            throw new EncryptException('Could not encrypt the data.');
+            throw new Exception('Could not encrypt the data.');
         }
 
         return base64_encode($json);
@@ -78,9 +81,10 @@ class Encrypter
 
     /**
      * 解密
-     * @param string $payload
+     * @param $payload
      * @param bool $unserialize
      * @return mixed|string
+     * @throws Exception
      */
     public function decrypt($payload, $unserialize = true)
     {
@@ -93,7 +97,7 @@ class Encrypter
         );
 
         if ($decrypted === false) {
-            throw new DecryptException('Could not decrypt the data.');
+            throw new Exception('Could not decrypt the data.');
         }
 
         return $unserialize ? unserialize($decrypted) : $decrypted;
@@ -125,17 +129,18 @@ class Encrypter
     /**
      * @param $payload
      * @return mixed
+     * @throws Exception
      */
     protected function getJsonPayload($payload)
     {
         $payload = json_decode(base64_decode($payload), true);
 
         if (! $this->validPayload($payload)) {
-            throw new DecryptException('The payload is invalid.');
+            throw new Exception('The payload is invalid.');
         }
 
         if (! $this->validMac($payload)) {
-            throw new DecryptException('The MAC is invalid.');
+            throw new Exception('The MAC is invalid.');
         }
 
         return $payload;
