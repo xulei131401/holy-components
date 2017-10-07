@@ -4,9 +4,8 @@ namespace Holy\Components\Database\Connectors;
 
 use PDO;
 
-class MySqlConnector extends Connector
+class MySqlConnector extends Connector implements ConnectorInterface
 {
-
     /**
      * 建立mysql连接
      * @param array $config
@@ -23,7 +22,6 @@ class MySqlConnector extends Connector
         $this->configureEncoding($connection, $config);
         $this->configureTimezone($connection, $config);
         $this->setModes($connection, $config);
-
         return $connection;
     }
 

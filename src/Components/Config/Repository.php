@@ -4,8 +4,9 @@ namespace Holy\Components\Config;
 
 use ArrayAccess;
 use Holy\Components\Primary\Arr;
+use Holy\Components\Contracts\Config\Repository as ConfigContract;
 
-class Repository implements ArrayAccess
+class Repository implements ArrayAccess, ConfigContract
 {
 
     protected $items = [];

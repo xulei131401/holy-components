@@ -3,8 +3,9 @@
 namespace Holy\Components\Hashing;
 
 use RuntimeException;
+use Holy\Components\Contracts\Hashing\Hasher as HasherContract;
 
-class BcryptHasher
+class BcryptHasher implements HasherContract
 {
     protected $cost = 10;
 

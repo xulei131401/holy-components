@@ -8,12 +8,12 @@ use Dotenv\Dotenv;
 
 class LoadEnvironmentVariables
 {
-    protected $environmentFile = '.env';
-    public function __construct($basePath = null)
+    protected static $environmentFile = '.env';
+    public static function register($basePath = null)
     {
         if ($basePath) {
-            if (file_exists($basePath .DIRECTORY_SEPARATOR . $this->environmentFile)) {
-                with(new Dotenv($basePath, $this->environmentFile))->load();
+            if (file_exists($basePath .DIRECTORY_SEPARATOR . self::$environmentFile)) {
+                with(new Dotenv($basePath, self::$environmentFile))->load();
             }
         }
     }
@@ -22,8 +22,8 @@ class LoadEnvironmentVariables
      * 获取env文件名
      * @return string
      */
-    public function getEnvironmentFile()
+    public static function getEnvironmentFile()
     {
-        return $this->environmentFile;
+        return self::$environmentFile;
     }
 }

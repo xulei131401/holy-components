@@ -1,10 +1,9 @@
 <?php
 /*下面是全局普通方法*/
 
+use Holy\Components\Contracts\Support\Htmlable;
 use Holy\Components\Primary\Str;
 use Holy\Components\Support\Debug\Dumper;
-use Holy\Container\Container;
-use Holy\Contracts\Support\Htmlable;
 use Holy\Components\Hashing\BcryptHasher;
 
 if (! function_exists('head')) {
@@ -229,6 +228,7 @@ if (! function_exists('__include_file')) {
         return include $file;
     }
 }
+
 if (! function_exists('__include_file')) {
 
     function __require_file($file)

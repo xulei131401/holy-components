@@ -1,9 +1,11 @@
 <?php
-
+/**
+ * 该类提供默认的PDO驱动配置，PDO可以连接各种数据库（mysql，sqlite，postgresql, sqlserver等）
+ */
 namespace Holy\Components\Database\Connectors;
 
+use Holy\Components\Database\Traits\LostConnectionTraits;
 use Holy\Components\Primary\Arr;
-use Holy\Database\Traits\LostConnectionTraits;
 use PDO;
 use Exception;
 
@@ -31,6 +33,7 @@ class Connector
      */
     public function createConnection($dsn, array $config, array $options)
     {
+        // 获取用户名和密码
         list($username, $password) = [Arr::get($config, 'username'), Arr::get($config, 'password'),];
         try {
             return $this->createPdoConnection($dsn, $username, $password, $options);
@@ -50,9 +53,11 @@ class Connector
      */
     protected function createPdoConnection($dsn, $username, $password, $options)
     {
+        // 判断是不是长连接
         if (! $this->isPersistentConnection($options)) {
 
         }
+        // 直接返回PDO的实例
         return new PDO($dsn, $username, $password, $options);
     }
 
