@@ -18,3 +18,4 @@
            引用的Laravel的BcryptHasher
     5.dd()--方便快捷的打印函数
         引用的symfony的dump组件
+    6.Other--一些第三方组件，比如短信，话费充值等

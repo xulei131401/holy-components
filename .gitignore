@@ -1,7 +1,6 @@
 .idea/
 .gitignore
 .sh
-/vendor/
 .vscode
 .git
 .env
