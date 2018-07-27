@@ -76,10 +76,11 @@ gf_sed(){
 
 gf_pull(){
     echo "更新远程源..."
-    git remote update upstream
+    #git remote update upstream
+    git remote update origin
 
     echo "同步远程源分支 ${CURRENT_BRANCH} 至本地..."
-    git pull upstream $CURRENT_BRANCH
+    git pull origin $CURRENT_BRANCH
 }
 
 gf_push(){
