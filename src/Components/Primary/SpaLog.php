@@ -6,8 +6,6 @@
 namespace component\log;
 
 use component\Enumerate;
-use think\Config;
-use think\Request;
 
 class SpaLog
 {
@@ -41,7 +39,8 @@ class SpaLog
     private function __construct($logName)
     {
         $this->_logName = $logName;
-        $cfgLog = Config::get('common.' . Enumerate::DEFAULT_LOG);
+        //TODO::替换为框架配置
+        $cfgLog = [];
         if (isset($cfgLog[$logName])) {
             $cfg = $cfgLog[$logName];
         }else {
@@ -171,9 +170,9 @@ class SpaLog
         }
 
         if (false !== strpos($pattern, '%i')) {
-            $request = Request::instance();
-            $ip = $request->ip();
-            $output = str_replace('%i', $ip, $output);
+//            $request = Request::instance();
+//            $ip = $request->ip();
+//            $output = str_replace('%i', $ip, $output);
         }
 
         if (false !== strpos($pattern, '%s')) {
@@ -201,7 +200,8 @@ class SpaLog
         $output = $this->_parsePattern($this->_pattern, $msg, $level);
    
         if ($this->_file) {
-            $dir = Config::get('common.' . Enumerate::DEFAULT_LOG)[Enumerate::DEFAULT_LOG_DEFAULT][Enumerate::DEFAULT_LOG_SAVE_PATH];
+            //TODO::替换为框架配置
+            $dir = [];
             if (!is_dir($dir)) {
                 mkdir($dir);
                 if (!is_writeable($dir)) chmod($dir, 0755);

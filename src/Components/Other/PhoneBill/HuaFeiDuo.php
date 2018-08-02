@@ -3,11 +3,10 @@
 namespace component\Other\PhoneBill;
 
 use component\Enumerate;
-use component\http\Http;
 use component\http\Json;
 use component\unicode\UnicodeUtil;
 use component\log\SpaLog;
-use think\Config;
+use Holy\Components\Other\Http\Http;
 
 /**
  * 话费多专用
@@ -25,7 +24,8 @@ class HuaFeiDuo
 
     private function __construct($secretKey = null, $apiKey = null)
     {
-        $config = Config::get('common.' . Enumerate::HUAFEIDUO_KEY);
+        //TODO::根据实际情况替换为框架默认配置
+        $config = [];
 
         $this->_secretKey   = $secretKey ?: $config[Enumerate::HUAFEIDUO_SECRET_KEY];
         $this->_apiKey      = $apiKey ?: $config[Enumerate::HUAFEIDUO_API_KEY];
