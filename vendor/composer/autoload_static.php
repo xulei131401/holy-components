@@ -9,6 +9,7 @@ class ComposerStaticInita15889411bcca140a9722bab389f69a9
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'be599c3ca6064f5e3138c94cde99a226' => __DIR__ . '/../..' . '/src/helpers/arr_helpers.php',
@@ -30,9 +31,24 @@ class ComposerStaticInita15889411bcca140a9722bab389f69a9
         array (
             'Qcloud\\Sms\\' => 11,
         ),
+        'P' => 
+        array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Container\\' => 14,
+            'PhpOffice\\PhpSpreadsheet\\' => 25,
+        ),
         'O' => 
         array (
             'OSS\\' => 4,
+        ),
+        'M' => 
+        array (
+            'Maatwebsite\\Excel\\' => 18,
+        ),
+        'I' => 
+        array (
+            'Illuminate\\Support\\' => 19,
+            'Illuminate\\Contracts\\' => 21,
         ),
         'H' => 
         array (
@@ -41,6 +57,7 @@ class ComposerStaticInita15889411bcca140a9722bab389f69a9
         'D' => 
         array (
             'Dotenv\\' => 7,
+            'Doctrine\\Common\\Inflector\\' => 26,
         ),
     );
 
@@ -73,9 +90,33 @@ class ComposerStaticInita15889411bcca140a9722bab389f69a9
         array (
             0 => __DIR__ . '/..' . '/qcloudsms/qcloudsms_php/src',
         ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'PhpOffice\\PhpSpreadsheet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
+        ),
         'OSS\\' => 
         array (
             0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
+        ),
+        'Maatwebsite\\Excel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maatwebsite/excel/src',
+        ),
+        'Illuminate\\Support\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/support',
+        ),
+        'Illuminate\\Contracts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/contracts',
         ),
         'Holy\\' => 
         array (
@@ -84,6 +125,10 @@ class ComposerStaticInita15889411bcca140a9722bab389f69a9
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Doctrine\\Common\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
         ),
     );
 
