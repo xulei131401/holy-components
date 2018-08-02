@@ -1,6 +1,8 @@
 <?php
 
 namespace Holy\Components\Other\SmS;
+
+
 use component\Enumerate;
 use component\http\Json;
 use component\log\SpaLog;
@@ -8,7 +10,6 @@ use Qcloud\Sms\SmsMultiSender;
 use Qcloud\Sms\SmsSingleSender;
 use Qcloud\Sms\SmsVoicePromptSender;
 use Qcloud\Sms\SmsVoiceVerifyCodeSender;
-use think\Config;
 
 
 /**
@@ -32,7 +33,8 @@ class TecentSms
 
     private function __construct($appId = null, $appKey = null)
     {
-        $config = Config::get('common.' . Enumerate::SMS)[Enumerate::SMS_TECENT];
+        //TODO::根据实际情况替换为框架配置
+        $config = [];
 
         $this->_appId = $appId ?: $config[Enumerate::SMS_TECENT_APP_ID];
         $this->_appKey = $appKey ?: $config[Enumerate::SMS_TECENT_APP_KEY];

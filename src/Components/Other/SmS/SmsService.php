@@ -4,9 +4,8 @@ namespace app\common\service\sms;
 
 
 use component\Enumerate;
-use component\sms\SmsConfig;
-use component\sms\TecentSms;
-use think\Config;
+use Holy\Components\Other\SmS\SmsConfig;
+use Holy\Components\Other\SmS\TecentSms;
 
 class SmsService
 {
@@ -26,7 +25,8 @@ class SmsService
 
     public static function getSmsAgent()
     {
-        $type = Config::get('common.' . Enumerate::SMS)[Enumerate::SMS_AGENT];
+        //TODO::根据实际情况替换为框架配置
+        $type = [];
         if ($type == Enumerate::SMS_TECENT) {
             return TecentSms::getInstance();
         }

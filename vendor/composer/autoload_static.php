@@ -136,12 +136,23 @@ class ComposerStaticInita15889411bcca140a9722bab389f69a9
         0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita15889411bcca140a9722bab389f69a9::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita15889411bcca140a9722bab389f69a9::$prefixDirsPsr4;
             $loader->fallbackDirsPsr4 = ComposerStaticInita15889411bcca140a9722bab389f69a9::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita15889411bcca140a9722bab389f69a9::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }
